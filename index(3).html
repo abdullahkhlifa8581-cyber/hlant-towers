@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>منظومة أبراج هلانت</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#070f1d;--deep:#0b182c;--panel:#10203a;--panel2:#162b4b;--line:rgba(150,185,235,.17);--text:#eaf0fa;--mute:#9aabc6;--amber:#ffb347;--amber-ink:#2b1800;--signal:#35d6c4;--alert:#ff6f61;--glow:rgba(255,179,71,.16);--fd:'Reem Kufi','Segoe UI',Tahoma,sans-serif;--fb:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--ink:#edf2f9;--deep:#e2eaf5;--panel:#fff;--panel2:#f0f5fb;--line:rgba(18,40,80,.15);--text:#0b1a2e;--mute:#4b5e7a;--amber:#b86500;--amber-ink:#fff6e8;--signal:#087f74;--alert:#c0392b;--glow:rgba(184,101,0,.12);color-scheme:light}}
+:root[data-theme="dark"]{--ink:#070f1d;--deep:#0b182c;--panel:#10203a;--panel2:#162b4b;--text:#eaf0fa;--mute:#9aabc6;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--text);font:400 15px/1.75 var(--fb);padding:20px 16px 56px;background-image:radial-gradient(900px 420px at 85% -80px,var(--glow),transparent 70%)}
+.app{max-width:1080px;margin:auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--fd);font-weight:600;line-height:1.35;margin:0}h2{font-size:22px}h3{font-size:17px}p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.mute{color:var(--mute)}.num{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}.brand b{font-family:var(--fd);font-size:22px;display:block;line-height:1.1}.brand small{color:var(--mute);font-size:12.5px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;padding:5px 14px;border-radius:99px;background:var(--panel);border:1px solid var(--line)}
+.pill i{width:9px;height:9px;border-radius:50%;background:var(--mute)}.pill.on i{background:var(--signal)}.pill.off i{background:var(--alert)}
+.hero{position:relative;border-radius:22px;overflow:hidden;min-height:340px;border:1px solid var(--line);display:flex;align-items:center;isolation:isolate}
+.hero svg{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to left,rgba(5,10,22,.9),rgba(5,10,22,.55) 45%,transparent 75%)}
+.hc{padding:34px;max-width:520px;color:#f4f7fd;display:flex;flex-direction:column;gap:12px}
+.hc h1{font-size:clamp(32px,6vw,50px);color:#fff}.hc .ey{font-size:13px;color:#ffc77d}.hc .lead{color:#d6e0f1}
+.hs{display:flex;gap:24px}.hs div{display:flex;flex-direction:column}.hs b{font-family:var(--fd);font-size:28px;color:#fff}.hs span{font-size:12.5px;color:#b9c8e0}
+@media(max-width:700px){.hero{align-items:flex-end;min-height:400px}.hero:after{background:linear-gradient(to top,rgba(5,10,22,.94),rgba(5,10,22,.6) 50%,transparent)}.hc{padding:22px 18px}}
+.ring{fill:none;stroke:#ffb347;stroke-width:2;transform-box:fill-box;transform-origin:center;animation:rp 3.6s ease-out infinite;opacity:0}.r2{animation-delay:1.8s}
+@keyframes rp{0%{transform:scale(.2);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.ring{animation:none;opacity:.3}}
+.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;padding:12px 18px;color:var(--mute);cursor:pointer;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent}
+.tab[aria-selected=true]{color:var(--amber);border-bottom-color:var(--amber)}
+.panel{display:flex;flex-direction:column;gap:18px}[hidden]{display:none!important}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
+.g2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:18px;align-items:start}@media(max-width:860px){.g2{grid-template-columns:minmax(0,1fr)}}
+.st{display:flex;flex-direction:column;gap:14px;min-width:0}
+.f{display:flex;flex-direction:column;gap:6px}.f label{font-size:13px;color:var(--mute)}
+.f input,.f select,.f textarea{width:100%;background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.f input[dir=ltr]{text-align:left}
+.r3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.fb{font-size:13px;min-height:20px}.ok{color:var(--signal)}.bad{color:var(--alert)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:12px;padding:11px 20px;font-weight:600;cursor:pointer;background:var(--amber);color:var(--amber-ink)}
+.btn.g{background:transparent;color:var(--text);border-color:var(--line)}.btn.d{background:transparent;color:var(--alert);border-color:var(--alert)}.btn.s{padding:6px 12px;font-size:13px}
+.btn:focus-visible,input:focus-visible,.tab:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.act{display:flex;gap:10px;flex-wrap:wrap}
+.map{border-radius:14px;overflow:hidden;border:1px solid var(--line)}.map svg{display:block;width:100%;height:auto}
+.badge{font-size:12px;padding:2px 10px;border-radius:99px;border:1px solid var(--line)}.badge.ok{border-color:var(--signal)}.badge.w{color:var(--amber);border-color:var(--amber)}
+.annc{padding:12px 16px;border-radius:12px;background:color-mix(in srgb,var(--amber) 11%,var(--panel));border:1px solid color-mix(in srgb,var(--amber) 35%,transparent)}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.tc{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}.tc svg{display:block;width:100%;height:auto}.tc .b{padding:14px 18px 18px;display:flex;flex-direction:column;gap:10px}
+.sts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.sts div{display:flex;flex-direction:column}.sts b{font-family:var(--fd)}.sts span{font-size:12px;color:var(--mute)}
+.bar{height:6px;border-radius:9px;background:var(--deep);overflow:hidden}.bar i{display:block;height:100%;background:var(--signal)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;counter-reset:s}
+.steps li{counter-increment:s;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.steps li:before{content:counter(s);font-family:var(--fd);font-size:24px;color:var(--amber)}
+.sw{position:relative;width:70px;height:38px;border-radius:99px;border:1px solid var(--line);background:var(--deep);cursor:pointer;flex:none}
+.sw:after{content:"";position:absolute;top:3px;right:3px;width:30px;height:30px;border-radius:50%;background:var(--mute);transition:transform .2s}
+.sw[aria-checked=true]{border-color:var(--signal)}.sw[aria-checked=true]:after{transform:translateX(-32px);background:var(--signal)}
+.opt,.trow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+.back{position:fixed;inset:0;z-index:50;background:rgba(3,8,18,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{width:100%;max-width:560px;max-height:100%;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.res{border-radius:16px;padding:16px;border:1px solid var(--line);background:var(--panel2);display:flex;flex-direction:column;gap:6px}.res.best{border-color:var(--amber)}
+.res .tag{font-size:12.5px;color:var(--mute)}.res.best .tag{color:var(--amber)}.res .big{font-family:var(--fd);font-size:22px}
+.kv{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.gate{position:fixed;inset:0;z-index:60;background:var(--ink);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.gate .in{max-width:420px;display:flex;flex-direction:column;gap:14px;align-items:center}
+.toast{position:fixed;bottom:max(18px,env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:90;background:var(--text);color:var(--ink);padding:10px 20px;border-radius:99px;max-width:calc(100% - 32px)}
+.empty{padding:30px;text-align:center;color:var(--mute);border:1px dashed var(--line);border-radius:16px}
+</style></head><body>
+<div class="app">
+<header class="top">
+<div class="brand" id="brand" title="انقر 5 مرات لدخول المسؤول"><svg width="44" height="44" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#10203a"/><path d="M24 12L17 40M24 12L31 40M20 28H28M18.5 34H29.5M21.5 21H26.5" stroke="#ffb347" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M16.5 17a8 8 0 0 1 3.5-3.6M31.5 17a8 8 0 0 0-3.5-3.6M12.5 13a12.5 12.5 0 0 1 4-4.6M35.5 13a12.5 12.5 0 0 0-4-4.6" stroke="#35d6c4" stroke-width="2" stroke-linecap="round" fill="none"/></svg><div><b>هلانت</b><small>منظومة الأبراج</small></div></div>
+<div class="act"><button class="btn s" id="inBtn" hidden>دخول المسؤول</button><button class="btn g s" id="lockBtn" hidden>قفل لوحة المسؤول</button><span id="pill" class="pill"><i></i><span>جارٍ التحقق</span></span></div>
+</header>
+<section class="hero"><div id="heroArt"></div><div class="hc"><p class="ey">شبكة هلانت للإنترنت اللاسلكي</p><h1>منظومة أبراج هلانت</h1><p class="lead">أدخل موقع الزبون، فتعرف فورًا أقرب برج وأفضل برج للتوصيل، مع اتجاه توجيه الطبق.</p><div class="hs"><div><b id="sT" class="num">0</b><span>برج في الشبكة</span></div><div><b id="sA" class="num">0</b><span>برج يعمل الآن</span></div></div></div></section>
+<nav class="tabs" role="tablist"><button class="tab" data-tab="finder" aria-selected="true">البحث عن برج</button><button class="tab" data-tab="towers" aria-selected="false" id="tabT">الأبراج</button><button class="tab" data-tab="gallery" aria-selected="false">معرض التركيبات</button><button class="tab" data-tab="admin" aria-selected="false" id="tabA" hidden>لوحة المسؤول</button></nav>
+<main>
+<section class="panel" id="p-finder"><div id="annc" class="annc" hidden></div><div class="g2">
+<div class="card st"><div><h2>موقع الزبون</h2><p class="mute">الصق الإحداثيات أو رابط خرائط Google.</p></div>
+<div class="f"><label for="cName">اسم الزبون (اختياري)</label><input id="cName" autocomplete="off"></div>
+<div class="f"><label for="cLoc">الموقع</label><input id="cLoc" dir="ltr" autocomplete="off" placeholder="32.4674, 14.5687"><div id="cFb" class="fb"></div></div>
+<div class="act"><button class="btn" id="cGo">احسب أقرب برج وأفضل برج</button></div>
+<p class="mute" style="font-size:13px">الروابط المختصرة (maps.app.goo.gl) لا تُقرأ هنا؛ انسخ الإحداثيات من الخرائط.</p></div>
+<div class="st"><div class="card st" id="mapC"><h3>مخطط الأبراج والتغطية</h3><div class="map" id="mapF"></div></div></div></div></section>
+<section class="panel" id="p-towers" hidden><div class="card st" id="mapC2"><h2>خريطة الشبكة</h2><div class="map" id="mapT"></div></div><div id="tg" class="tg"></div></section>
+<section class="panel" id="p-gallery" hidden><h2>أنواع الأبراج والتركيبات</h2><div class="tg" id="gg"></div>
+<div class="card st"><h2>مراحل تركيب الزبون</h2><ol class="steps"><li><b>معاينة الموقع</b><span class="mute">خط رؤية مفتوح نحو البرج بلا عوائق.</span></li><li><b>تثبيت الصاري</b><span class="mute">قاعدة صلبة وعالية وصاري عمودي.</span></li><li><b>توجيه الطبق</b><span class="mute">حسب الزاوية التي تظهرها المنظومة.</span></li><li><b>قياس الإشارة</b><span class="mute">اضبط حتى أفضل RSSI وSNR ثم شدّ التثبيت.</span></li><li><b>الكابلات والتأريض</b><span class="mute">عزل الوصلات وتأريض وحماية صواعق.</span></li><li><b>التسليم والاختبار</b><span class="mute">اختبر السرعة داخل البيت وسلّم الزبون بياناته.</span></li></ol></div></section>
+<section class="panel" id="p-admin" hidden><div class="g2"><div class="st">
+<div class="card st"><div class="opt" style="border:0;padding:0"><div><h2>تشغيل المنظومة</h2><p class="mute" id="mNote"></p></div><button class="sw" id="swM" role="switch" aria-checked="false" aria-label="تشغيل المنظومة"></button></div>
+<div class="opt"><b>عرض قائمة الأبراج للمهندسين</b><button class="sw" id="swL" role="switch" aria-checked="true" aria-label="قائمة الأبراج"></button></div>
+<div class="opt"><b>عرض الإحداثيات والخريطة للمهندسين</b><button class="sw" id="swC" role="switch" aria-checked="true" aria-label="الإحداثيات"></button></div>
+<div class="f"><label for="aTxt">رسالة للمهندسين</label><textarea id="aTxt" rows="3"></textarea></div><div class="act"><button class="btn g s" id="aSave">حفظ الرسالة</button></div></div>
+<div class="card st"><h3>تغيير الرمز السري</h3><div class="f"><label for="pn1">رمز جديد (6 خانات فأكثر)</label><input id="pn1" type="password" dir="ltr" autocomplete="new-password"></div><div class="f"><label for="pn2">أعد كتابته</label><input id="pn2" type="password" dir="ltr" autocomplete="new-password"></div><div id="pFb" class="fb"></div><div class="act"><button class="btn g s" id="pSave">تغيير الرمز</button></div></div></div>
+<div class="st"><form class="card st" id="tForm" autocomplete="off"><h2 id="tFT">إضافة برج</h2>
+<div class="f"><label for="tName">اسم البرج</label><input id="tName"></div>
+<div class="f"><label for="tLoc">موقع البرج</label><input id="tLoc" dir="ltr" placeholder="32.4674, 14.5687"><div id="tFb" class="fb"></div></div>
+<div class="r3"><div class="f"><label for="tH">الارتفاع (م)</label><input id="tH" type="number" min="1" dir="ltr" value="30"></div><div class="f"><label for="tR">التغطية (كم)</label><input id="tR" type="number" min="0.1" step="0.1" dir="ltr" value="5"></div><div class="f"><label for="tLd">الحمل (%)</label><input id="tLd" type="number" min="0" max="100" dir="ltr" value="0"></div></div>
+<div class="r3"><div class="f"><label for="tTy">النوع</label><select id="tTy"><option value="lattice">برج شبكي</option><option value="mono">أحادي العمود</option><option value="roof">صاري على سطح</option></select></div><div class="f"><label for="tSt">الحالة</label><select id="tSt"><option value="on">يعمل</option><option value="maint">صيانة</option></select></div></div>
+<div class="f"><label for="tNt">ملاحظات</label><textarea id="tNt" rows="2"></textarea></div>
+<div class="act"><button class="btn" type="submit">حفظ البرج</button><button class="btn g" type="button" id="tCan" hidden>إلغاء</button></div></form>
+<div class="card st"><h3>الأبراج المسجّلة</h3><div id="aList"></div></div></div></div></section>
+</main><p style="text-align:center;margin:8px 0 0"><button class="btn g s" id="inBtn2" type="button">دخول المسؤول</button></p></div>
+<div class="back" id="mBack" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+<div class="gate" id="gate" hidden></div><div class="toast" id="toast" hidden></div>
+<script>
+(function(){"use strict";
+var $=function(i){return document.getElementById(i)},NS="http://www.w3.org/2000/svg";
+var TY={lattice:"برج شبكي",mono:"أحادي العمود",roof:"صاري على سطح"};
+var SB="https://zzovydqvtpugyxrjfpig.supabase.co",KEY="sb_publishable_FkQ3s1CZloeGHJlPRqrgXw_ENBHf5FV";
+function api(path,o){o=o||{};return fetch(SB+"/rest/v1/"+path,{method:o.m||"GET",headers:{apikey:KEY,"Content-Type":"application/json"},body:o.b?JSON.stringify(o.b):undefined}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+function rpc(fn,b){return api("rpc/"+fn,{m:"POST",b:b})}
+var S={pin:null,db:null,user:null,admin:false,canEdit:false,sys:{},sysL:false,tw:[],twL:false,tab:"finder",res:null,edit:null,fail:false};
+function h(t,p){var e=document.createElement(t);p=p||{};Object.keys(p).forEach(function(k){var v=p[k];if(k==="class")e.className=v;else if(k==="text")e.textContent=v;else if(k.slice(0,2)==="on")e.addEventListener(k.slice(2),v);else if(v!=null&&v!==false)e.setAttribute(k,v)});for(var i=2;i<arguments.length;i++)[].concat(arguments[i]).forEach(function(c){if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(String(c)))});return e}
+function sv(t,p,x){var e=document.createElementNS(NS,t);Object.keys(p||{}).forEach(function(k){e.setAttribute(k,p[k])});if(x!=null)e.textContent=x;return e}
+function toast(m){var t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2800)}
+function km(d){return d<1?Math.round(d*1000)+" م":d.toFixed(1)+" كم"}
+function rad(x){return x*Math.PI/180}
+function nd(s){return String(s).replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}).replace(/٫/g,".").replace(/،/g,",").trim()}
+function ok(a,b){return isFinite(a)&&isFinite(b)&&Math.abs(a)<=90&&Math.abs(b)<=180?{lat:a,lng:b}:null}
+function parse(raw){var s=nd(raw||"");if(!s)return null;try{s=decodeURIComponent(s)}catch(e){}var n="(-?\\d{1,3}(?:\\.\\d+)?)",m;
+m=s.match(new RegExp("@"+n+","+n));if(m)return ok(+m[1],+m[2]);m=s.match(new RegExp("!3d"+n+"!4d"+n));if(m)return ok(+m[1],+m[2]);
+m=s.match(new RegExp("[?&](?:q|ll|query|destination|center)="+n+"[, ]\\s*"+n));if(m)return ok(+m[1],+m[2]);
+m=s.match(/(-?\d{1,3}\.\d+)\s*[,;\s]\s*(-?\d{1,3}\.\d+)/);return m?ok(+m[1],+m[2]):null}
+function dist(a,b){var R=6371,p=rad(b.lat-a.lat),l=rad(b.lng-a.lng),x=Math.sin(p/2)*Math.sin(p/2)+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(l/2)*Math.sin(l/2);return 2*R*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))}
+function brg(a,b){var y=Math.sin(rad(b.lng-a.lng))*Math.cos(rad(b.lat)),x=Math.cos(rad(a.lat))*Math.sin(rad(b.lat))-Math.sin(rad(a.lat))*Math.cos(rad(b.lat))*Math.cos(rad(b.lng-a.lng));return(Math.atan2(y,x)*180/Math.PI+360)%360}
+var DR=["شمال","شمال شرق","شرق","جنوب شرق","جنوب","جنوب غرب","غرب","شمال غرب"];function card(d){return DR[Math.round(d/45)%8]}
+function compute(c,T){var A=T.filter(function(t){return t.status!=="maint"});if(!A.length)return null;var mh=Math.max.apply(null,A.map(function(t){return t.height||1}));
+var L=A.map(function(t){var d=dist(c,t),i=d<=t.radius;return{t:t,d:d,inR:i,brg:brg(c,t),score:i?Math.round(55*(1-d/t.radius)+25*((t.height||1)/mh)+20*(1-Math.min(100,t.load||0)/100)):0}});
+var n=L.slice().sort(function(a,b){return a.d-b.d})[0],I=L.filter(function(x){return x.inR});
+var b=I.length?I.slice().sort(function(a,b){return b.score-a.score})[0]:L.slice().sort(function(a,b){return(a.d-a.t.radius)-(b.d-b.t.radius)})[0];
+return{cust:c,nearest:n,best:b,anyIn:I.length>0}}
+/* art */
+function lat(cx,by,H,wb,wt,n,sw){var o="",i,y,w,y2,w2;o+='M'+(cx-wb/2)+' '+by+'L'+(cx-wt/2)+' '+(by-H)+'M'+(cx+wb/2)+' '+by+'L'+(cx+wt/2)+' '+(by-H);
+for(i=0;i<=n;i++){y=by-H*i/n;w=(wb+(wt-wb)*i/n)/2;o+='M'+(cx-w)+' '+y+'H'+(cx+w);if(i<n){y2=by-H*(i+1)/n;w2=(wb+(wt-wb)*(i+1)/n)/2;o+='M'+(cx-w)+' '+y+'L'+(cx+w2)+' '+y2+'M'+(cx+w)+' '+y+'L'+(cx-w2)+' '+y2}}
+o+='M'+cx+' '+(by-H)+'V'+(by-H*1.16);return '<path d="'+o+'" fill="none" stroke="#cfdcf3" stroke-width="'+sw+'" stroke-linecap="round"/><circle cx="'+cx+'" cy="'+(by-H*1.16)+'" r="3" fill="#ff4d4d"/>'}
+var DEFS='<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#091634"/><stop offset=".55" stop-color="#2b2a5c"/><stop offset=".85" stop-color="#b8527a"/><stop offset="1" stop-color="#ff9a55"/></linearGradient><radialGradient id="sn"><stop offset="0" stop-color="#ffd08a" stop-opacity=".9"/><stop offset="1" stop-color="#ff9a55" stop-opacity="0"/></radialGradient></defs>';
+function stars(w,h,n){var o="",i;for(i=0;i<n;i++)o+='<circle cx="'+((i*97.3)%w).toFixed(0)+'" cy="'+((i*53.7)%(h*.45)).toFixed(0)+'" r="'+(i%4?.8:1.4)+'" fill="#fff" opacity="'+(.35+(i%3)*.18)+'"/>';return o}
+function hills(w,h){return '<path d="M0 '+h*.78+'C'+w*.2+' '+h*.66+' '+w*.35+' '+h*.76+' '+w*.5+' '+h*.7+'S'+w*.85+' '+h*.62+' '+w+' '+h*.72+'V'+h+'H0Z" fill="#1a1a3e"/><path d="M0 '+h*.9+'C'+w*.3+' '+h*.82+' '+w*.6+' '+h*.92+' '+w+' '+h*.86+'V'+h+'H0Z" fill="#0a1226"/>'}
+function heroSVG(){return '<svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+DEFS+'<rect width="1200" height="400" fill="url(#sk)"/>'+stars(1200,400,60)+'<circle cx="740" cy="330" r="180" fill="url(#sn)"/>'+hills(1200,400)+'<g opacity=".55">'+lat(200,370,150,50,9,7,1.5)+lat(1040,370,130,44,8,7,1.5)+'</g>'+lat(470,362,270,90,15,9,2.2)+'<circle class="ring" cx="470" cy="50" r="40"/><circle class="ring r2" cx="470" cy="50" r="40"/></svg>'}
+function art(k){var b="";if(k==="lattice")b=lat(200,222,160,70,13,8,1.9);else if(k==="mono")b='<path d="M194 224L198 66H202L206 224Z" fill="#cfdcf3"/><g fill="#e8f0ff"><rect x="178" y="72" width="14" height="30" rx="3"/><rect x="208" y="72" width="14" height="30" rx="3"/></g><circle cx="200" cy="58" r="3" fill="#ff4d4d"/>';
+else if(k==="roof")b='<rect x="96" y="144" width="208" height="92" fill="#17264a"/><path d="M208 144V86" stroke="#cfdcf3" stroke-width="2.4"/><circle cx="208" cy="82" r="5" fill="#e8f0ff"/>';
+else b='<rect x="104" y="176" width="150" height="62" fill="#17264a"/><path d="M120 176V110" stroke="#cfdcf3" stroke-width="3.5"/><path d="M146 98L330 62" stroke="#ffb347" stroke-width="2.4" stroke-dasharray="6 6"/>'+lat(350,160,80,26,6,6,1.3);
+var d=document.createElement("div");d.innerHTML='<svg viewBox="0 0 400 250" role="img" aria-label="'+(TY[k]||"تركيب طبق")+'">'+DEFS+'<rect width="400" height="250" fill="url(#sk)"/>'+stars(400,250,30)+hills(400,250)+b+'</svg>';return d.firstChild}
+function map(host,o){var W=640,H=400,s=sv("svg",{viewBox:"0 0 640 400",role:"img","aria-label":"مخطط الأبراج"});host.textContent="";s.append(sv("rect",{width:W,height:H,fill:"var(--deep)"}));
+var i;for(i=40;i<W;i+=40)s.append(sv("line",{x1:i,y1:0,x2:i,y2:H,stroke:"var(--line)"}));for(i=40;i<H;i+=40)s.append(sv("line",{x1:0,y1:i,x2:W,y2:i,stroke:"var(--line)"}));
+var pts=o.towers.map(function(t){return{lat:t.lat,lng:t.lng}});if(o.cust)pts.push(o.cust);
+if(!pts.length){s.append(sv("text",{x:320,y:200,fill:"var(--mute)","text-anchor":"middle"},"لا توجد أبراج"));host.append(s);return}
+var la=pts.map(function(p){return p.lat}),lo=pts.map(function(p){return p.lng}),l0=(Math.min.apply(null,la)+Math.max.apply(null,la))/2,g0=(Math.min.apply(null,lo)+Math.max.apply(null,lo))/2,kx=111.32*Math.cos(rad(l0)),ky=110.57;
+var P=function(p){return{x:(p.lng-g0)*kx,y:-(p.lat-l0)*ky}},hw=.4,hh=.3;pts.forEach(function(p){var q=P(p);hw=Math.max(hw,Math.abs(q.x));hh=Math.max(hh,Math.abs(q.y))});
+var sc=Math.min((W/2-70)/hw,(H/2-58)/hh),X=function(q){return W/2+q.x*sc},Y=function(q){return H/2+q.y*sc};
+o.towers.forEach(function(t){var q=P(t);s.append(sv("circle",{cx:X(q),cy:Y(q),r:Math.max(4,t.radius*sc),fill:t.status==="maint"?"var(--mute)":"var(--signal)","fill-opacity":.08,stroke:t.status==="maint"?"var(--mute)":"var(--signal)","stroke-opacity":.55}))});
+if(o.cust&&o.hl){var c=P(o.cust);[[o.hl.n,"var(--signal)","6 5",1.8],[o.hl.b,"var(--amber)","0",2.4]].forEach(function(a){var q=P(a[0]);s.append(sv("line",{x1:X(c),y1:Y(c),x2:X(q),y2:Y(q),stroke:a[1],"stroke-dasharray":a[2],"stroke-width":a[3]}))})}
+o.towers.forEach(function(t){var q=P(t),x=X(q),y=Y(q);s.append(sv("path",{d:"M"+x+" "+(y-10)+"L"+(x+7)+" "+(y+6)+"L"+(x-7)+" "+(y+6)+"Z",fill:t.status==="maint"?"var(--mute)":"var(--amber)"}));
+s.append(sv("text",{x:x,y:y+22,"text-anchor":"middle",fill:"var(--text)","font-size":12.5,stroke:"var(--deep)","stroke-width":4,"paint-order":"stroke"},t.name))});
+if(o.cust){var q2=P(o.cust);s.append(sv("circle",{cx:X(q2),cy:Y(q2),r:7,fill:"var(--alert)"}));s.append(sv("text",{x:X(q2),y:Y(q2)-14,"text-anchor":"middle",fill:"var(--text)","font-size":12.5,stroke:"var(--deep)","stroke-width":4,"paint-order":"stroke"},o.name||"الزبون"))}
+host.append(s)}
+/* state */
+function canGeo(){return S.admin||S.sys.showCoords!==false}function canList(){return S.admin||S.sys.showList!==false}
+function gate(){var g=$("gate"),m=null;if(S.fail)m="fail";else if(!S.sysL)m="load";else if(!S.admin&&!S.sys.active)m="lock";
+if(!m){g.hidden=true;g.textContent="";return}g.hidden=false;if(g.dataset.m===m)return;g.dataset.m=m;g.textContent="";
+var t=m==="load"?"جارٍ فتح المنظومة":m==="fail"?"تعذّر فتح المنظومة":"المنظومة متوقفة",d=m==="load"?"لحظات من فضلك.":m==="fail"?"تعذّر الاتصال بقاعدة البيانات.":(S.sys.lockMsg||"أوقف المسؤول المنظومة مؤقتًا.");
+var br=h("div",{class:"brand",text:"🔒",style:"font-size:56px"});br.addEventListener("click",secret);g.append(h("div",{class:"in"},br,h("h2",{text:t}),h("p",{class:"mute",text:d})))}
+function render(){var p=$("pill"),on=!!S.sys.active;p.className="pill"+(S.sysL?(on?" on":" off"):"");p.lastChild.textContent=!S.sysL?"جارٍ التحقق":on?"المنظومة تعمل":"المنظومة متوقفة";
+gate();$("lockBtn").hidden=!S.admin;$("inBtn").hidden=S.admin||!S.canEdit;$("inBtn2").hidden=S.admin;$("tabA").hidden=!S.admin;$("tabT").hidden=!canList();
+if(S.tab==="admin"&&!S.admin)tab("finder");if(S.tab==="towers"&&!canList())tab("finder");
+$("sT").textContent=S.tw.length;$("sA").textContent=S.tw.filter(function(t){return t.status!=="maint"}).length;
+var a=$("annc");a.hidden=!S.sys.annc;a.textContent=S.sys.annc||"";
+$("mapC").hidden=!canGeo();if(canGeo())map($("mapF"),{towers:S.tw,cust:S.res&&S.res.cust,name:S.res&&S.res.name,hl:S.res&&{n:S.res.nearest.t,b:S.res.best.t}});
+$("cGo").disabled=S.twL&&!S.tw.some(function(t){return t.status!=="maint"});
+var g=$("tg");g.textContent="";$("mapC2").hidden=!canGeo()||!S.tw.length;if(canGeo()&&S.tw.length)map($("mapT"),{towers:S.tw});
+if(S.twL&&!S.tw.length)g.append(h("div",{class:"empty",text:"لم تُضف أبراج بعد."}));
+S.tw.forEach(function(t){var m=h("div");m.append(art(t.type));g.append(h("article",{class:"tc"},m,h("div",{class:"b"},h("div",{class:"opt",style:"border:0;padding:0"},h("h3",{text:t.name}),h("span",{class:"badge "+(t.status==="maint"?"w":"ok"),text:t.status==="maint"?"صيانة":"يعمل"})),h("div",{class:"mute",style:"font-size:13px",text:TY[t.type]||""}),
+h("div",{class:"sts"},h("div",{},h("b",{class:"num",text:t.height+" م"}),h("span",{text:"الارتفاع"})),h("div",{},h("b",{class:"num",text:t.radius+" كم"}),h("span",{text:"التغطية"})),h("div",{},h("b",{class:"num",text:t.load+"%"}),h("span",{text:"الحمل"}))),
+h("div",{class:"bar"},h("i",{style:"width:"+Math.max(2,t.load)+"%"})),canGeo()?h("div",{class:"mute num",style:"font-size:13px",text:t.lat.toFixed(5)+" , "+t.lng.toFixed(5)}):null,t.notes?h("p",{class:"mute",text:t.notes}):null)))});
+if(S.admin)admin()}
+function sw(el,v){el.setAttribute("aria-checked",String(!!v))}
+function admin(){sw($("swM"),S.sys.active);$("mNote").textContent=S.sys.active?"تعمل للمهندسين. أغلق المفتاح لإيقافها فورًا.":"متوقفة: لا يستطيع أي مهندس استخدامها.";sw($("swL"),S.sys.showList!==false);sw($("swC"),S.sys.showCoords!==false);
+if(document.activeElement!==$("aTxt"))$("aTxt").value=S.sys.annc||"";var L=$("aList");L.textContent="";
+if(!S.tw.length)L.append(h("div",{class:"empty",text:"لا توجد أبراج"}));
+S.tw.forEach(function(t){L.append(h("div",{class:"trow"},h("div",{},h("b",{text:t.name}),h("div",{class:"mute num",style:"font-size:13px",text:t.lat.toFixed(5)+" , "+t.lng.toFixed(5)})),h("div",{class:"act"},
+h("button",{class:"btn g s",type:"button",onclick:function(){adm("hl_save_tower",{p_id:t.id,p:{status:t.status==="maint"?"on":"maint"}})}},t.status==="maint"?"تشغيل":"صيانة"),
+h("button",{class:"btn g s",type:"button",onclick:function(){editT(t)}},"تعديل"),
+h("button",{class:"btn d s",type:"button",onclick:function(ev){var b=ev.currentTarget;if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="تأكيد الحذف";return}adm("hl_delete_tower",{p_id:t.id},"تم الحذف")}},"حذف"))))})}
+function fail(){toast("تعذّر الحفظ، حاول مرة أخرى")}
+function adm(fn,b,msg){b.p_pin=S.pin;return rpc(fn,b).then(function(r){if(r!=="ok"){if(r==="bad"||r==="locked")lock();throw 0}return loadAll()}).then(function(){if(msg)toast(msg);return true},function(){fail();return false})}
+function setSys(p){if(!S.admin)return;var q={};if("active" in p)q.active=p.active;if("showList" in p)q.show_list=p.showList;if("showCoords" in p)q.show_coords=p.showCoords;if("annc" in p)q.annc=p.annc;return adm("hl_set_state",{p:q})}
+function loadAll(){return Promise.all([api("hl_state?id=eq.1&select=*"),api("hl_towers?select=*&order=created_at")]).then(function(r){var x=r[0][0]||{};S.sys={active:!!x.active,showList:x.show_list!==false,showCoords:x.show_coords!==false,annc:x.annc||""};S.sysL=true;S.tw=r[1].map(function(t){return{id:t.id,name:String(t.name||"برج"),lat:+t.lat,lng:+t.lng,height:+t.height||0,radius:+t.radius||5,load:+t.load_pct||0,type:t.type||"lattice",status:t.status||"on",notes:t.notes||"",createdAt:t.created_at}});S.twL=true;S.fail=false;render()},function(){if(!S.sysL)S.fail=true;render()})}
+function tab(n){S.tab=n;[].forEach.call(document.querySelectorAll(".tab"),function(b){b.setAttribute("aria-selected",String(b.dataset.tab===n))});["finder","towers","gallery","admin"].forEach(function(x){$("p-"+x).hidden=x!==n})}
+/* finder */
+function blk(r){var n=r.nearest,b=r.best,same=n.t.id===b.t.id,w=h("div",{class:"st"});
+function kv(x){return h("div",{class:"kv"},h("span",{},"المسافة: ",h("b",{class:"num",text:km(x.d)})),h("span",{},"اتجاه الطبق: ",h("b",{text:card(x.brg)+" "+Math.round(x.brg)+"°"})),h("span",{},"الارتفاع: ",h("b",{class:"num",text:(x.t.height||"-")+" م"})))}
+var c1=h("div",{class:"res"+(same?" best":"")},h("div",{class:"tag",text:same?"الأقرب والأفضل للتوصيل":"أقرب برج"}),h("div",{class:"big",text:n.t.name}),kv(n),h("div",{},h("span",{class:"badge "+(n.inR?"ok":"w"),text:n.inR?"داخل نطاق التغطية":"خارج نطاق التغطية"})));w.append(c1);
+if(!same)w.append(h("div",{class:"res best"},h("div",{class:"tag",text:"أفضل برج للتوصيل"}),h("div",{class:"big",text:b.t.name}),kv(b),h("div",{},h("span",{class:"badge "+(b.inR?"ok":"w"),text:b.inR?"درجة الملاءمة "+b.score+"%":"يحتاج وصلة إضافية أو صاريًا أعلى"})),h("p",{class:"mute",style:"font-size:14px",text:"الأفضل يراعي التغطية والارتفاع وحمل الشبكة ("+(b.t.load||0)+"%)."})));
+if(!r.anyIn)w.append(h("p",{class:"annc",text:"الموقع خارج تغطية كل الأبراج. يلزم فحص ميداني."}));return w}
+function sum(r){var L=[];if(r.name)L.push("الزبون: "+r.name);L.push("أقرب برج: "+r.nearest.t.name+" ("+km(r.nearest.d)+")");L.push("أفضل برج للتوصيل: "+r.best.t.name+" ("+km(r.best.d)+")");L.push("اتجاه الطبق: "+card(r.best.brg)+" "+Math.round(r.best.brg)+"°");return L.join("\n")}
+function modal(nodes){var m=$("modal");m.textContent="";m.append.apply(m,nodes);$("mBack").hidden=false}
+function closeM(){$("mBack").hidden=true}
+function run(){var fb=$("cFb"),ll=parse($("cLoc").value);if(!ll){fb.className="fb bad";fb.textContent="اكتب خط العرض ثم الطول، مثل 32.4674, 14.5687";return}
+var r=compute(ll,S.tw);if(!r){fb.className="fb bad";fb.textContent="لا توجد أبراج تعمل حاليًا.";return}
+r.name=$("cName").value.trim();S.res=r;render();var ta=h("textarea",{readonly:"",rows:4,style:"width:100%;background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:10px;color:inherit"});ta.value=sum(r);
+modal([h("h2",{text:r.name?"للزبون "+r.name:"أقرب برج وأفضل برج"}),blk(r),ta,h("div",{class:"act"},h("button",{class:"btn",onclick:function(){try{navigator.clipboard.writeText(ta.value).then(function(){toast("تم النسخ")})}catch(e){ta.select()}}},"نسخ الملخص"),h("button",{class:"btn g",onclick:closeM},"إغلاق"))])}
+function live(i,f){var v=i.value.trim();if(!v){f.className="fb";f.textContent="";return}var l=parse(v);f.className="fb "+(l?"ok":"bad");f.textContent=l?"تم التعرف: "+l.lat.toFixed(5)+" ، "+l.lng.toFixed(5):"لا أستطيع قراءة هذا الموقع بعد"}
+/* auth */
+function b64(b){var s="";new Uint8Array(b).forEach(function(x){s+=String.fromCharCode(x)});return btoa(s)}
+function ub(s){var b=atob(s),u=new Uint8Array(b.length),i;for(i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+function derive(c,salt,it){return crypto.subtle.importKey("raw",new TextEncoder().encode(c),"PBKDF2",false,["deriveBits"]).then(function(k){return crypto.subtle.deriveBits({name:"PBKDF2",salt:salt,iterations:it,hash:"SHA-256"},k,256)}).then(b64)}
+var fails=0,until=0,idle=null;
+function bump(){clearTimeout(idle);if(S.admin)idle=setTimeout(lock,600000)}
+function lock(){if(!S.admin)return;S.admin=false;S.pin=null;clearTimeout(idle);if(S.tab==="admin")tab("finder");render();toast("تم قفل لوحة المسؤول")}
+var cl=0,ct=null;function secret(){if(S.admin)return;cl++;clearTimeout(ct);ct=setTimeout(function(){cl=0},1800);if(cl>=5){cl=0;openCode()}}
+function openCode(){if(S.admin)return;
+var inp=h("input",{type:"password",dir:"ltr",autocomplete:"off",placeholder:"الرمز السري",style:"background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:11px 13px;color:inherit"}),fb=h("div",{class:"fb"}),go=h("button",{class:"btn",type:"submit"},"دخول");
+modal([h("form",{class:"st",autocomplete:"off",onsubmit:function(ev){ev.preventDefault();var v=inp.value;go.disabled=true;
+rpc("hl_login",{p_pin:v}).then(function(r){go.disabled=false;if(r==="ok"){S.pin=v;S.admin=true;S.canEdit=true;try{localStorage.setItem("hl_owner","1")}catch(e){}closeM();bump();render();tab("admin");toast("تم فتح لوحة المسؤول")}else{fb.className="fb bad";fb.textContent=r==="locked"?"محاولات كثيرة، انتظر 30 ثانية":"الرمز غير صحيح";inp.value="";inp.focus()}},function(){go.disabled=false;fb.className="fb bad";fb.textContent="تعذّر الاتصال"})}},
+h("h2",{text:"دخول المسؤول"}),h("p",{class:"mute",text:"اكتب الرمز السري لفتح لوحة التحكم."}),inp,fb,h("div",{class:"act"},go,h("button",{class:"btn g",type:"button",onclick:closeM},"إلغاء")))]);inp.focus()}
+function editT(t){S.edit=t;$("tName").value=t.name;$("tLoc").value=t.lat+", "+t.lng;$("tH").value=t.height;$("tR").value=t.radius;$("tLd").value=t.load;$("tTy").value=t.type;$("tSt").value=t.status;$("tNt").value=t.notes;live($("tLoc"),$("tFb"));$("tFT").textContent="تعديل البرج";$("tCan").hidden=false;$("tForm").scrollIntoView({behavior:"smooth"})}
+function reset(){S.edit=null;$("tForm").reset();$("tFT").textContent="إضافة برج";$("tCan").hidden=true;$("tFb").textContent=""}
+function saveT(ev){ev.preventDefault();var n=$("tName").value.trim(),ll=parse($("tLoc").value);if(!n){toast("اكتب اسم البرج");return}if(!ll){toast("الموقع غير مفهوم");return}
+var num=function(i,d,a,b){var v=parseFloat($(i).value);if(!isFinite(v))v=d;return Math.min(b,Math.max(a,v))};
+var d={name:n,lat:ll.lat,lng:ll.lng,height:num("tH",30,1,1000),radius:num("tR",5,.1,200),load:num("tLd",0,0,100),type:$("tTy").value,status:$("tSt").value,notes:$("tNt").value.trim(),createdAt:S.edit?S.edit.createdAt:Date.now()};
+var ed=S.edit,pl={name:d.name,lat:d.lat,lng:d.lng,height:d.height,radius:d.radius,load_pct:d.load,type:d.type,status:d.status,notes:d.notes};
+adm("hl_save_tower",{p_id:ed?ed.id:null,p:pl},ed?"تم حفظ التعديلات":"تمت إضافة البرج").then(function(o){if(o)reset()})}
+function bind(){
+[].forEach.call(document.querySelectorAll(".tab"),function(b){b.addEventListener("click",function(){tab(b.dataset.tab)})});
+$("brand").addEventListener("click",secret);$("cGo").addEventListener("click",run);$("cLoc").addEventListener("input",function(){live($("cLoc"),$("cFb"))});$("cLoc").addEventListener("keydown",function(e){if(e.key==="Enter")run()});
+$("tLoc").addEventListener("input",function(){live($("tLoc"),$("tFb"))});$("tForm").addEventListener("submit",saveT);$("tCan").addEventListener("click",reset);
+$("lockBtn").addEventListener("click",lock);$("inBtn").addEventListener("click",openCode);$("inBtn2").addEventListener("click",openCode);$("mBack").addEventListener("click",function(e){if(e.target===$("mBack"))closeM()});
+document.addEventListener("keydown",function(e){bump();if(e.key==="Escape")closeM()});document.addEventListener("click",bump);
+$("swM").addEventListener("click",function(){var v=!S.sys.active;setSys({active:v});toast(v?"تم تشغيل المنظومة":"تم إيقاف المنظومة")});
+$("swL").addEventListener("click",function(){setSys({showList:S.sys.showList===false})});$("swC").addEventListener("click",function(){setSys({showCoords:S.sys.showCoords===false})});
+$("aSave").addEventListener("click",function(){setSys({annc:$("aTxt").value.trim()});toast("تم حفظ الرسالة")});
+$("pSave").addEventListener("click",function(){var a=$("pn1").value,b=$("pn2").value,f=$("pFb");function bad(m){f.className="fb bad";f.textContent=m}if(!S.admin)return;if(a.length<6)return bad("استخدم 6 خانات على الأقل");if(a!==b)return bad("الرمزان غير متطابقين");
+adm("hl_change_pin",{p_new:a},"تم تغيير الرمز السري").then(function(o){if(o){S.pin=a;$("pn1").value="";$("pn2").value="";f.className="fb ok";f.textContent="تم تغيير الرمز"}else bad("تعذّر تغيير الرمز")})})}
+function start(){$("heroArt").replaceWith((function(){var d=document.createElement("div");d.innerHTML=heroSVG();return d.firstChild})());
+var g=$("gg");[["lattice","برج شبكي","للتغطية الواسعة والارتفاعات الكبيرة."],["mono","برج أحادي العمود","مظهر أنظف ومساحة أقل."],["roof","صاري على سطح مبنى","حل سريع لتقوية النقاط القريبة."],["dish","تركيب طبق عند الزبون","طبق موجَّه بزاوية محسوبة مع تأريض."]].forEach(function(x){var c=h("div",{class:"tc"});c.append(art(x[0]));c.append(h("div",{class:"b"},h("h3",{text:x[1]}),h("span",{class:"mute",text:x[2]})));g.append(c)});
+bind();render();
+try{S.canEdit=localStorage.getItem("hl_owner")==="1"}catch(e){}
+loadAll();setInterval(loadAll,15000);if(location.hash==="#admin")setTimeout(openCode,400)}
+start()})();
+</script></body></html>
