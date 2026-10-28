@@ -157,59 +157,12 @@ if(o.cust){var q2=P(o.cust);s.append(sv("circle",{cx:X(q2),cy:Y(q2),r:7,fill:"va
 host.append(s)}
 /* state */
 function canGeo(){return S.admin||S.sys.showCoords!==false}function canList(){return S.admin||S.sys.showList!==false}
-function gate(){
-  var g=$("gate"),m=null;
-  if(S.fail)m="fail";
-  else if(!S.sysL)m="load";
-  else if(!S.admin&&!S.sys.active)m="lock";
-  
-  if(!m){g.hidden=true;g.textContent="";return}
-  g.hidden=false;
-  if(g.dataset.m===m)return;
-  g.dataset.m=m;
-  g.textContent="";
-  
-  var titleTxt=m==="load"?"جارٍ فتح المنظومة":m==="fail"?"تعذّر فتح المنظومة":"المنظومة متوقفة";
-  var descTxt=m==="load"?"لحظات من فضلك.":m==="fail"?"تعذّر الاتصال بقاعدة البيانات.":"أوقف المسؤول المنظومة مؤقتاً.";
-  
-  var br=h("div",{class:"brand",text:"🔒",style:"font-size:56px"});
-  br.addEventListener("click",secret);
-  
-  var container=h("div",{class:"in"},br,h("h2",{text:titleTxt}),h("p",{class:"mute",text:descTxt}));
-  
-  if(m==="lock"){
-    var pinInput=h("input",{type:"password",dir:"ltr",placeholder:"أدخل الرمز السري للمنظومة",style:"margin-top:10px;text-align:center;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--deep);color:var(--text);width:100%"});
-    var loginBtn=h("button",{class:"btn",style:"width:100%;margin-top:8px",text:"دخول وتشغيل المنظومة"});
-    
-    var doLogin=function(){
-      var val=pinInput.value.trim();
-      if(val==="221184598" || val==="221184598"){
-        hashPin("221184598").then(function(hsh){
-          S.pin=hsh;
-          S.admin=true; S.canEdit=true;
-          // تشغيل المنظومة تلقائياً عند دخول المسؤول الصحيح
-          setSys({active:true}).then(function(){
-            toast("تم تشغيل المنظومة بنجاح");
-            tab("admin");
-            loadAll();
-          }).catch(function(){
-            S.admin=true; S.canEdit=true;
-            loadAll();
-          });
-        });
-      } else {
-        alert("الرمز السري غير صحيح!");
-      }
-    };
-    
-    loginBtn.addEventListener("click",doLogin);
-    pinInput.addEventListener("keydown",function(e){if(e.key==="Enter")doLogin()});
-    
-    container.append(pinInput,loginBtn);
-  }
-  
-  g.append(container);
-}
+function gate(){var g=$("gate"),m=null;if(S.fail)m="fail";else if(!S.sysL)m="load";else if(!S.admin&&!S.sys.active)m="lock";
+if(!m){g.hidden=true;g.textContent="";return}g.hidden=false;if(g.dataset.m===m)return;g.dataset.m=m;g.textContent="";
+var t=m==="load"?"جارٍ فتح المنظومة":m==="fail"?"تعذّر فتح المنظومة":"المنظومة متوقفة",d=m==="load"?"لحظات من فضلك.":m==="fail"?"تعذّر الاتصال بقاعدة البيانات.":(S.sys.lockMsg||"أوقف المسؤول المنظومة مؤقتًا.");
+var br=h("div",{class:"brand",text:"🔒",style:"font-size:56px"});br.addEventListener("click",secret);
+var unlockBtn=h("button",{class:"btn",style:"margin-top:10px",text:"دخول المسؤول لتشغيل المنظومة",onclick:secret});
+g.append(h("div",{class:"in"},br,h("h2",{text:t}),h("p",{class:"mute",text:d}),unlockBtn))}
 function render(){var p=$("pill"),on=!!S.sys.active;p.className="pill"+(S.sysL?(on?" on":" off"):"");p.lastChild.textContent=!S.sysL?"جارٍ التحقق":on?"المنظومة تعمل":"المنظومة متوقفة";
 gate();$("lockBtn").hidden=!S.admin;$("inBtn").hidden=S.admin||!S.canEdit;$("inBtn2").hidden=S.admin;$("tabA").hidden=!S.admin;$("tabT").hidden=!canList();
 if(S.tab==="admin"&&!S.admin)tab("finder");if(S.tab==="towers"&&!canList())tab("finder");
@@ -240,7 +193,7 @@ function tab(n){S.tab=n;[].forEach.call(document.querySelectorAll(".tab"),functi
 function blk(r){var n=r.nearest,b=r.best,same=n.t.id===b.t.id,w=h("div",{class:"st"});
 function kv(x){return h("div",{class:"kv"},h("span",{},"المسافة: ",h("b",{class:"num",text:km(x.d)})),h("span",{},"اتجاه الطبق: ",h("b",{text:card(x.brg)+" "+Math.round(x.brg)+"°"})),h("span",{},"الارتفاع: ",h("b",{class:"num",text:(x.t.height||"-")+" م"}))}
 var c1=h("div",{class:"res"+(same?" best":"")},h("div",{class:"tag",text:same?"الأقرب والأفضل للتوصيل":"أقرب برج"}),h("div",{class:"big",text:n.t.name}),kv(n),h("div",{},h("span",{class:"badge "+(n.inR?"ok":"w"),text:n.inR?"داخل نطاق التغطية":"خارج نطاق التغطية"})));w.append(c1);
-if(!same)w.append(h("div",{class:"res best"},h("div",{class:"tag",text:"أفضل برج للتوصيل"}),h("div",{class:"big",text:b.t.name}),kv(b),h("div",{},h("span",{class:"badge "+(b.inR?"ok":"w"),text:b.inR?"درجة الملاءمة "+b.score+"%":"يحتاج وصلة إضافية أو صاريًا أعلى"})),h("p",{class:"mute",style:"font-size:14px",text:"الأفضل يراعي التغطية والارتفاع وحمل الشبكة ("+(b.t.load||0||0)+"%)."})));
+if(!same)w.append(h("div",{class:"res best"},h("div",{class:"tag",text:"أفضل برج للتوصيل"}),h("div",{class:"big",text:b.t.name}),kv(b),h("div",{},h("span",{class:"badge "+(b.inR?"ok":"w"),text:b.inR?"درجة الملاءمة "+b.score+"%":"يحتاج وصلة إضافية أو صاريًا أعلى"})),h("p",{class:"mute",style:"font-size:14px",text:"الأفضل يراعي التغطية والارتفاع وحمل الشبكة ("+(b.t.load||0)+"%)."})));
 if(!r.anyIn)w.append(h("p",{class:"annc",text:"الموقع خارج تغطية كل الأبراج. يلزم فحص ميداني."}));return w}
 function sum(r){var L=[];if(r.name)L.push("الزبون: "+r.name);L.push("أقرب برج: "+r.nearest.t.name+" ("+km(r.nearest.d)+")");L.push("أفضل برج للتوصيل: "+r.best.t.name+" ("+km(r.best.d)+")");L.push("اتجاه الطبق: "+card(r.best.brg)+" "+Math.round(r.best.brg)+"°");return L.join("\n")}
 function modal(nodes){var m=$("modal");m.textContent="";m.append.apply(m,nodes);$("mBack").hidden=false}
@@ -269,6 +222,7 @@ function secret(){
           alert("الرمز السري غير صحيح أو لم يتم ضبطه في القاعدة");
         }
       }).catch(function(){
+        // Fallback في حال فشل الاتصال بقاعدة البيانات للتحقق
         S.admin=true; S.canEdit=true; S.pin=hsh;
         toast("تم تسجيل الدخول محلياً");
         tab("admin");
